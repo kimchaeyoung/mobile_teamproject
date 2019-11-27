@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "795699254145",
+    "firebase_url": "https://master-chef-challenge.firebaseio.com",
+    "project_id": "master-chef-challenge",
+    "storage_bucket": "master-chef-challenge.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795699254145:android:7ef4174374d0d4cebf8e80",
+        "android_client_info": {
+          "package_name": "s21500267.edu.handong.team_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "795699254145-8oqkj1g0fc3tf9m011vh1i1gsnn22png.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "s21500267.edu.handong.team_project",
+            "certificate_hash": "842702a11a21d87abc98d420c007a79648f404c7"
+          }
+        },
+        {
+          "client_id": "795699254145-cabikvjuab1gutkngctahhgji77kflg9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-AGY3vTbycYgkJlQuR_euVjPB-bkRx1E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "795699254145-cabikvjuab1gutkngctahhgji77kflg9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
