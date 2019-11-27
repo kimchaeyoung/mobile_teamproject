@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:team_project/login.dart';
 import 'package:team_project/home.dart';
 import 'package:team_project/mypage.dart';
+import 'package:team_project/list.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -19,6 +20,10 @@ class Router {
       case '/mypage' :
         return MaterialPageRoute(
             builder: (_)=> MyPage()
+        ) ;
+      case '/listrecipe' :
+        return MaterialPageRoute(
+            builder: (_)=> ListRecipe()
         ) ;
       default:
         return MaterialPageRoute(

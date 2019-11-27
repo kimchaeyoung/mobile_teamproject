@@ -79,7 +79,7 @@ class _MyPageState extends State<MyPage> {
                   ),
                   leading: Icon(Icons.local_dining, color: Colors.amber),
                   onTap: () {
-                    Navigator.pushNamed(context, '/search');
+                    Navigator.pushNamed(context, '/listrecipe');
                   },
                 ),
                 ListTile(
@@ -88,7 +88,7 @@ class _MyPageState extends State<MyPage> {
                   ),
                   leading: Icon(Icons.games, color: Colors.amber),
                   onTap: () {
-                    Navigator.pushNamed(context, '/favorite');
+                    Navigator.pushNamed(context, '/');
                   },
                 ),
                 ListTile(
@@ -97,7 +97,7 @@ class _MyPageState extends State<MyPage> {
                   ),
                   leading: Icon(Icons.settings, color: Colors.amber),
                   onTap: () {
-                    Navigator.pushNamed(context, '/website');
+                    Navigator.pushNamed(context, '/');
                   },
                 ),
                 ListTile(
@@ -106,7 +106,7 @@ class _MyPageState extends State<MyPage> {
                   ),
                   leading: Icon(Icons.power_settings_new, color: Colors.amber),
                   onTap: () {
-                    Navigator.pushNamed(context, '/mypage');
+                    Navigator.pushNamed(context, '/login');
                   },
                 ),
               ]

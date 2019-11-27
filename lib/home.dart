@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
             _scaffoldKey.currentState.openDrawer();
           },
         ),
-        title: Text('MasterChefChallenge'),
+        title: Text('Master Chef Challenge'),
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     leading: Icon(Icons.local_dining, color: Colors.amber),
                     onTap: () {
-                      Navigator.pushNamed(context, '/search');
+                      Navigator.pushNamed(context, '/listrecipe');
                     },
                   ),
                   ListTile(
@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     leading: Icon(Icons.games, color: Colors.amber),
                     onTap: () {
-                      Navigator.pushNamed(context, '/favorite');
+                      Navigator.pushNamed(context, '/');
                     },
                   ),
                   ListTile(
@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     leading: Icon(Icons.settings, color: Colors.amber),
                     onTap: () {
-                      Navigator.pushNamed(context, '/website');
+                      Navigator.pushNamed(context, '/');
                     },
                   ),
                   ListTile(
@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     leading: Icon(Icons.power_settings_new, color: Colors.amber),
                     onTap: () {
-                      Navigator.pushNamed(context, '/mypage');
+                      Navigator.pushNamed(context, '/login');
                     },
                   ),
                 ]
@@ -164,7 +164,36 @@ class _HomePageState extends State<HomePage> {
                                       fit: BoxFit.fill,
                                     ),
                                   ),
-                                  Text(recipes[i].name),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Text(
+                                            recipes[i].name,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w900,
+                                              foreground: Paint()
+                                              ..style = PaintingStyle.stroke
+                                                ..strokeWidth = 2
+                                              ..color = Colors.white
+                                            )
+                                        ),
+                                        Text(
+                                            recipes[i].name,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w900,
+                                                color: Colors.black,
+                                            )
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
                             );
@@ -234,6 +263,5 @@ class _HomePageState extends State<HomePage> {
 
     );
   }
-
 
 }

@@ -25,12 +25,12 @@ class _LoginPageState extends State<LoginPage> {
             Column(
               children: <Widget>[
                 Image.network(
-                  'https://firebasestorage.googleapis.com/v0/b/master-chef-challenge.appspot.com/o/OverProject.png?alt=media&token=677dbd52-96e3-4672-b2c6-383a1bd8412a',
+                  'https://firebasestorage.googleapis.com/v0/b/master-chef-challenge.appspot.com/o/mcc.png?alt=media&token=05262af8-bfb3-4a2e-a382-e2f489a9a579',
                   height: 250,
                 ),
               ],
             ),
-            SizedBox(height: 70.0),
+            SizedBox(height: 10.0),
             _googleSignInButton(),
           ],
         ),
