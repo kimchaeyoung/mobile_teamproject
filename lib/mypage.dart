@@ -70,7 +70,7 @@ class _MyPageState extends State<MyPage> {
                   ),
                   leading: Icon(Icons.home, color: Colors.amber),
                   onTap: () {
-                    Navigator.pushNamed(context, '/main');
+                    Navigator.pushNamed(context, '/');
                   },
                 ),
                 ListTile(

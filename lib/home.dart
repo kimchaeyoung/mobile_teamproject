@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     leading: Icon(Icons.home, color: Colors.amber),
                     onTap: () {
-                      Navigator.pushNamed(context, '/main');
+                      Navigator.pushNamed(context, '/');
                     },
                   ),
                   ListTile(
