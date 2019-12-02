@@ -6,8 +6,12 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 
+import 'package:team_project/list.dart';
+import 'package:team_project/step1.dart';
 import 'package:team_project/recipe.dart';
 import 'package:team_project/viewModel.dart';
+
+int i = 0;
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,17 +21,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  final GoogleSignIn googleSignIn = GoogleSignIn();
   final _searchController = TextEditingController();
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  List<Recipe> recipes;
+  List<Record> recipes;
+
+
 
   @override
   Widget build(BuildContext context) {
 
     final recipeProvider = Provider.of<ViewModel>(context);
-    int i = 0;
-
     return Scaffold(
       key: _scaffoldKey,
       resizeToAvoidBottomPadding: false,
@@ -58,8 +63,8 @@ class _HomePageState extends State<HomePage> {
             child: ListView(
                 children: <Widget>[
                   DrawerHeader(
-                    padding: EdgeInsets.fromLTRB(16.0, 110.0, 16.0, 8.0),
-                    child: Text('Master Chef Challenge', style: Theme.of(context).textTheme.headline.copyWith(color: Colors.white)),
+                    //padding: EdgeInsets.fromLTRB(16.0, 110.0, 16.0, 8.0),
+                    child: Image.network('https://firebasestorage.googleapis.com/v0/b/master-chef-challenge.appspot.com/o/mcc.png?alt=media&token=05262af8-bfb3-4a2e-a382-e2f489a9a579'),
                     decoration: BoxDecoration(
                       color: Colors.amber,
                     ),
@@ -88,16 +93,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     leading: Icon(Icons.games, color: Colors.amber),
                     onTap: () {
-                      Navigator.pushNamed(context, '/');
-                    },
-                  ),
-                  ListTile(
-                    title: Text('Setting',
-                      style: Theme.of(context).textTheme.title.copyWith(color: Colors.black26),
-                    ),
-                    leading: Icon(Icons.settings, color: Colors.amber),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/');
+                      Navigator.pushNamed(context, '/createpage');
                     },
                   ),
                   ListTile(
@@ -106,6 +102,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     leading: Icon(Icons.power_settings_new, color: Colors.amber),
                     onTap: () {
+                      signOutGoogle();
                       Navigator.pushNamed(context, '/login');
                     },
                   ),
@@ -115,94 +112,19 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(Icons.search),
-                  SizedBox(width: 20.0),
-                  Expanded(
-                    child: TextField(
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        labelText: 'Search',
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
             SizedBox(height: 30),
             Text('Weekly Challenge', style: TextStyle(fontSize: 25.0)),
             SizedBox(height: 10),
 
             Expanded(
               child: StreamBuilder(
-                  stream: recipeProvider.fetchRecipesAsStream(),
+                  stream: Firestore.instance.collection('menu').snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasData) {
-                      recipes = snapshot.data.documents.map((doc) => Recipe.fromMap(doc.data, doc.documentID)).toList();
-                      return
-                        new CarouselSlider(
-                          height: 200,
-                          items: recipes.map((index) {
-                            if(i == recipes.length - 1){
-                              i = 0;
-                            }
-                            else{
-                              i++;
-                            }
-                            return Container(
-                              child: Stack(
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: 200,
-                                    child: Image.network(
-                                      recipes[i].imgurl,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
-                                    child: Stack(
-                                      children: <Widget>[
-                                        Text(
-                                            recipes[i].name,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w900,
-                                              foreground: Paint()
-                                              ..style = PaintingStyle.stroke
-                                                ..strokeWidth = 2
-                                              ..color = Colors.white
-                                            )
-                                        ),
-                                        Text(
-                                            recipes[i].name,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w900,
-                                                color: Colors.black,
-                                            )
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }).toList(),
-
-                        );
+                      return _buildSlider(context, snapshot.data.documents);
                     }
                     else {
-                      return Text('fetching');
+                      return LinearProgressIndicator();
                     }
                   }
               ),
@@ -229,7 +151,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('LOW'),
                     ),
                     onPressed:(){
-
+                      Navigator.pushNamed(context, '/low');
                     },
                   ),
                   FlatButton(
@@ -240,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('MID'),
                     ),
                     onPressed:(){
-
+                      Navigator.pushNamed(context, '/mid');
                     },
                   ),
                   FlatButton(
@@ -251,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text('HIGH'),
                     ),
                     onPressed:(){
-
+                      Navigator.pushNamed(context, '/high');
                     },
                   ),
                 ],
@@ -262,6 +184,81 @@ class _HomePageState extends State<HomePage> {
       ),
 
     );
+  }
+
+  Widget _buildSlider(BuildContext context, List<DocumentSnapshot> snapshot) {
+    recipes = snapshot.map((doc) => Record.fromSnapshot(doc)).toList();
+    return CarouselSlider(
+      height: 200,
+      items: recipes.map((index) {
+        if(i == recipes.length - 1){
+          i = 0;
+        }
+        else{
+          i++;
+        }
+        return Container(
+          child: Stack(
+            children: <Widget>[
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                      context, MaterialPageRoute(
+                      builder: (context) =>
+                      Step1Page(detail: recipes[i]),
+                  )
+                  );
+                },
+                child: SizedBox(
+                  height: 200,
+                  child: Image.network(
+                    recipes[i].imgurl,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
+                child: Stack(
+                  children: <Widget>[
+                    Text(
+                        recipes[i].name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w900,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 2
+                              ..color = Colors.white
+                        )
+                    ),
+                    Text(
+                        recipes[i].name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.black,
+                        )
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      }).toList(),
+
+    );
+  }
+
+  void signOutGoogle() async {
+    await googleSignIn.signOut();
+
+    print("Google User Sign Out");
   }
 
 }

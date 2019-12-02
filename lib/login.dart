@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:team_project/home.dart';
+
 
 class LoginPage extends StatefulWidget {
 
@@ -44,13 +46,13 @@ class _LoginPageState extends State<LoginPage> {
       splashColor: Colors.white10,
       onPressed: () {
         signInWithGoogle().whenComplete(() {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return HomePage();
-              },
-            ),
-          );
+//          Navigator.of(context).push(
+//            MaterialPageRoute(
+//              builder: (context) {
+//                return HomePage();
+//              },
+//            ),
+//          );
         });
       },
       highlightElevation: 0,
@@ -94,6 +96,44 @@ class _LoginPageState extends State<LoginPage> {
     assert(user.uid == currentUser.uid);
 
     print("signInWithGoogle succeded:  ${user.uid}");
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('처음이세요?'),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('네'),
+                onPressed: () {
+                  Firestore.instance.collection('users').add({'uid': user.uid.toString(), 'email': user.email.toString(), 'photo': user.photoUrl.toString(), 'nickname': user.uid.toString(), 'level': 1, 'history': [], 'myrecipe': []});
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return HomePage();
+                      },
+                    ),
+                  );
+                },
+              ),
+              new FlatButton(
+                child: new Text('아니오'),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return HomePage();
+                      },
+                    ),
+                  );
+                },
+              )
+            ],
+          );
+        });
+
+
+
     return user;
   }
 
@@ -102,5 +142,7 @@ class _LoginPageState extends State<LoginPage> {
 
     print("Google User Sign Out");
   }
+
+
 
 }

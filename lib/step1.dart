@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:team_project/list.dart';
+import 'package:team_project/history.dart';
+import 'package:team_project/myrecipe.dart';
 import 'package:team_project/step2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -61,9 +63,9 @@ class Step1Page extends StatelessWidget {
                     ],
                   ),
                   Flexible(
-                    flex: 3,
+                    flex: 4,
                     child: Container(
-                      padding: const EdgeInsets.all(32),
+                      padding: const EdgeInsets.fromLTRB(32, 32, 32, 15),
                       child: Row(
                         children: <Widget>[
                           Expanded(
@@ -91,15 +93,6 @@ class Step1Page extends StatelessWidget {
                       child: new ButtonBar(
                         alignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          //Spacer(flex: 1),
-//                          new RaisedButton(
-//                            onPressed: () {},
-//                            child: new Text(
-//                              "BACK",
-//                              style: TextStyle(color: Colors.white),
-//                            ),
-//                            color: Colors.grey,
-//                          ),
                           SizedBox(width: 100,),
                           new RaisedButton(
                             onPressed: () {
@@ -136,8 +129,22 @@ class Step1Page extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
             ),
           ),
-          Text(detail.ingredient[0]['ing_name'].toString() +" - " +detail.ingredient[0]['ing_weight'].toString()+"g"),
-          Text(detail.ingredient[1]['ing_name'].toString() +" - " +detail.ingredient[1]['ing_weight'].toString()+"g" ),
+          SizedBox(
+            width: 200,
+            height: 120,
+            child:
+            ListView.builder(
+                padding: const EdgeInsets.all(1),
+                itemCount: detail.ingredient.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    child: Center(child: Text(
+                        detail.ingredient[index]['ing_name'] + " - " +
+                            detail.ingredient[index]['ing_weight'])),
+                  );
+                }
+            ),
+          )
         ],
       ),
     );

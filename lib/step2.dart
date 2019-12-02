@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:team_project/list.dart';
 import 'package:team_project/step3.dart';
 import 'package:quiver/async.dart';
+import 'dart:async';
 
 class Step2Page extends StatefulWidget {
 
@@ -18,32 +19,38 @@ class _Step2PageState extends State<Step2Page> {
   final Record detail;
   _Step2PageState({this.detail});
 
-  int _start = 600;
-  int _current = 600;
+  bool flag = true;
+  Timer _timer;
+  int index = 0;
+  int _start = 10;
 
-  int _current_min = 0;
-
-  int _current_second = 0;
 
   void startTimer() {
-    CountdownTimer countDownTimer = new CountdownTimer(
-      new Duration(minutes: _start),
-      new Duration(seconds: 1),
+    const oneSec = const Duration(seconds: 1);
+    _timer = new Timer.periodic(
+      oneSec,
+          (Timer timer) =>
+          setState(
+                () {
+              if (!mounted) return;
+              if (_start < 1) {
+                if(index == detail.recipe.length-1){
+                  flag = false;
+                  timer.cancel();
+                }
+                else {
+                  print(detail.recipe.length);
+                  index += 1;
+                  _start = 10;
+                  startTimer();
+                }
+                //timer.cancel();
+              } else {
+                _start = _start - 1;
+              }
+            },
+          ),
     );
-
-    var sub = countDownTimer.listen(null);
-    sub.onData((duration) {
-      setState(() { _current = _start - duration.elapsed.inSeconds;
-      _current_second= _current%60;
-        // _current_min = _current/ ;
-        //_current_min = Math.round(_current/60);
-      });
-    });
-
-    sub.onDone(() {
-      print("Done");
-      sub.cancel();
-    });
   }
 
 
@@ -69,36 +76,6 @@ class _Step2PageState extends State<Step2Page> {
               ),
               child: Card(
                 child: Column(children: <Widget>[
-                  //Image.network(detail.imgurl,width: 600,height: 200,fit: BoxFit.fill,),
-                  //   Stack(
-                  //   children: <Widget>[
-//                      Container(
-//                          child: Image.network(
-//                            //detail.imgurl,
-//                            fit: BoxFit.fill,
-//                            width: 600,
-//                            height: 200,
-//                          )),
-//                      ButtonTheme.bar(
-//                        child: ButtonBar(
-//                          children: <Widget>[
-//                            IconButton(
-//                              icon: Icon(Icons.arrow_forward),
-//                              color: Colors.white,
-//                              onPressed: () {
-//                                Navigator.push(
-//                                    context, MaterialPageRoute(
-//                                  builder: (context) => Step3Page(detail: detail),
-//                                )
-//                                );
-//                              },
-//                            ),
-//                          ],
-//                        ),
-//                      ),
-
-                  //       ],
-                  //    ),
                   Flexible(
                     flex: 6,
                     child: Container(
@@ -112,7 +89,10 @@ class _Step2PageState extends State<Step2Page> {
                                 Container(
                                   child: Row(
                                     children: <Widget>[
-                                      _buildBody(context),
+                                      SizedBox(
+                                        width: 250,
+                                        child: Text(detail.recipe[index].toString()),
+                                      )
                                     ],
                                   ),
                                 ),
@@ -127,16 +107,10 @@ class _Step2PageState extends State<Step2Page> {
                                         },
                                         //child: Text("start"),
                                       ),
-                                      Text("$_current_min",)
+                                      Text("$_start",)
 
                                     ],
                                   ),
-//                                  child: RaisedButton(
-//                                    onPressed: (){
-//                                      startTimer();
-//                                    },
-//                                    child: Text("start"),
-//                                  ),
 
                                 )
                               ],
@@ -172,7 +146,7 @@ class _Step2PageState extends State<Step2Page> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          Step3Page(detail: detail)));
+                                          Step3Page(detail: detail, flag: flag)));
                             },
                             child: new Text("NEXT",
                                 style: TextStyle(color: Colors.white)),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:team_project/list.dart';
+import 'package:flare_flutter/flare_actor.dart';
 
 class Step3Page extends StatelessWidget {
   final Record detail;
+  final bool flag;
 
-  Step3Page({Key key, @required this.detail}) : super(key: key);
+  Step3Page({Key key, @required this.detail, this.flag}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +31,21 @@ class Step3Page extends StatelessWidget {
                 child: Card(
                     child: Column(
                       children: <Widget>[
-                        Container(
-                          child: Image.network(
-                            'https://dimg.donga.com/a/660/0/90/5/ugc/CDB/SODA/Article/5d/a6/d1/6a/5da6d16a1d5fd2738de6.png',
-                            fit: BoxFit.fill,
+                        SizedBox(
+                          width: 300,
+                          height: 300,
+                          child:
+                          flag?
+                          FlareActor(
+                              "images/Bob (Minion).flr",
+                              alignment:Alignment.center, fit:BoxFit.contain,animation: 'Dance'
+                          ):
+                          FlareActor(
+                              "images/Bob (Minion).flr",
+                              alignment:Alignment.center, fit:BoxFit.contain,animation: 'Stand'
                           ),
                         ),
+
                         Flexible(
                           flex: 2,
                           child: Container(

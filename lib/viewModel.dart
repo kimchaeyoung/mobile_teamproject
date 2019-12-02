@@ -10,7 +10,6 @@ class ViewModel extends ChangeNotifier {
 
   List<Recipe> recipes;
 
-
   Future<List<Recipe>> fetchRecipes() async {
     var result = await _api.getDataCollection();
     recipes = result.documents
