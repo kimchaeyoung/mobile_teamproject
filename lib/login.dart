@@ -106,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
               new FlatButton(
                 child: new Text('네'),
                 onPressed: () {
-                  Firestore.instance.collection('users').add({'uid': user.uid.toString(), 'email': user.email.toString(), 'photo': user.photoUrl.toString(), 'nickname': user.uid.toString(), 'level': 1, 'history': [], 'myrecipe': []});
+                  Firestore.instance.collection('users').add({'uid': user.uid.toString(), 'email': user.email.toString(), 'photo': user.photoUrl.toString(), 'nickname': user.uid.toString(), 'level': 1, 'history': []});
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {

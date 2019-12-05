@@ -136,8 +136,10 @@ class _ListPageState extends State<ListRecipe> {
 
 
 class Record {
+  final String id;
   final String name;
   final String imgurl;
+  final String creator;
   final int level;
   final List<dynamic> reviews;
   final List<dynamic> ingredient;
@@ -145,9 +147,11 @@ class Record {
   final DocumentReference reference;
 
   Record.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['name'] != null),
+      : assert(map['id'] != null),
+        id = map['id'],
         name = map['name'],
         imgurl = map['imgurl'],
+        creator = map['creator'],
         level = map['level'],
         reviews = map['reviews'],
         ingredient = map['ingredient'],
@@ -157,5 +161,5 @@ class Record {
       : this.fromMap(snapshot.data, reference: snapshot.reference);
 
   @override
-  String toString() => "Record<$name$imgurl$level$reviews$ingredient$recipe>";
+  String toString() => "Record<$id$name$imgurl$creator$level$reviews$ingredient$recipe>";
 }

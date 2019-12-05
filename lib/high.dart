@@ -11,7 +11,7 @@ class HighPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Master Chef Challenge'),
+        title: Text('High'),
         backgroundColor: Colors.amber,
       ),
       body: _buildBody(context),

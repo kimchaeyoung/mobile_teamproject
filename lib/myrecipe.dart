@@ -8,22 +8,24 @@ bool flag = true;
 
 class MyRecipePage extends StatefulWidget {
 
-  final List<dynamic> myrecipe;
+  final String uid;
 
-  MyRecipePage({Key key, @required this.myrecipe}):super(key:key);
+  MyRecipePage({Key key, @required this.uid}):super(key:key);
 
   @override
-  _MyRecipePageState createState() {
-    return _MyRecipePageState();
-  }
+  _MyRecipePageState createState() => _MyRecipePageState(uid: uid);
 }
 
 class _MyRecipePageState extends State<MyRecipePage> {
+
+  final String uid;
+  _MyRecipePageState({this.uid});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Master Chef Challenge'),
+        title: Text('My Recipe'),
         backgroundColor: Colors.amber,
       ),
       body: _buildBody(context),
@@ -31,8 +33,10 @@ class _MyRecipePageState extends State<MyRecipePage> {
   }
 
   Widget _buildBody(BuildContext context) {
+    print('uid: ' + uid);
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('menu').snapshots(),
+      stream: Firestore.instance.collection('menu').where("creator", isEqualTo:uid).snapshots(),
+      //snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return LinearProgressIndicator();
 

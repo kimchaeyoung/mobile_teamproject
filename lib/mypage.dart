@@ -117,6 +117,7 @@ class _MyPageState extends State<MyPage> {
       body: StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance.collection('users').snapshots(),
         builder: (context, snapshot) {
+
           if(snapshot.hasData){
             snapshot.data.documents.forEach((DocumentSnapshot snap){
               if(snap['uid'] == uid){
@@ -125,7 +126,8 @@ class _MyPageState extends State<MyPage> {
                 user = User.fromSnapshot(snap);
               }
             });
-            return Center(
+
+            return Container(
               child: ListView(
                 padding: EdgeInsets.fromLTRB(30, 0, 30, 10),
                 children: <Widget>[
@@ -158,7 +160,7 @@ class _MyPageState extends State<MyPage> {
                           splashColor: Colors.amberAccent,
                           onPressed: () {
                             Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => MyRecipePage(myrecipe: user.myrecipe))
+                                context, MaterialPageRoute(builder: (context) => MyRecipePage(uid: user.uid))
                             );
                           },
                           highlightElevation: 0,
@@ -195,7 +197,7 @@ class _MyPageState extends State<MyPage> {
                           splashColor: Colors.amberAccent,
                           onPressed: () {
                             Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => HistoryPage(history: user.history))
+                              context, MaterialPageRoute(builder: (context) => HistoryPage(uid: user.uid))
                             );
                           },
                           highlightElevation: 0,
@@ -320,7 +322,6 @@ class User {
   final String photo;
   final int level;
   final List<dynamic> history;
-  final List<dynamic> myrecipe;
   final DocumentReference reference;
 
   User.fromMap(Map<String, dynamic> map, {this.reference})
@@ -329,12 +330,10 @@ class User {
         nickname = map['nickname'],
         photo = map['photo'],
         level = map['level'],
-        history = map['history'],
-        myrecipe = map['myrecipe'];
-
+        history = map['history'];
   User.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, reference: snapshot.reference);
 
   @override
-  String toString() => "Record<$uid$nickname$level$history$myrecipe>";
+  String toString() => "Record<$uid$nickname$level$history>";
 }

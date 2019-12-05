@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 
 import 'package:team_project/list.dart';
 import 'package:team_project/step1.dart';
-import 'package:team_project/recipe.dart';
 import 'package:team_project/viewModel.dart';
 
 int i = 0;
@@ -129,16 +128,6 @@ class _HomePageState extends State<HomePage> {
                   }
               ),
             ),
-
-//        CarouselSlider(
-//          height: 200.0,
-//          items: recipes.map((i) {
-//
-//          }).toList(),
-//        ),
-            SizedBox(
-              height: 20,
-            ),
             Expanded(
               child: ButtonBar(
                 alignment: MainAxisAlignment.center,
@@ -189,66 +178,62 @@ class _HomePageState extends State<HomePage> {
   Widget _buildSlider(BuildContext context, List<DocumentSnapshot> snapshot) {
     recipes = snapshot.map((doc) => Record.fromSnapshot(doc)).toList();
     return CarouselSlider(
-      height: 200,
+      height: 300,
       items: recipes.map((index) {
-        if(i == recipes.length - 1){
-          i = 0;
-        }
-        else{
-          i++;
-        }
-        return Container(
-          child: Stack(
-            children: <Widget>[
-              GestureDetector(
-                onTap: (){
-                  Navigator.push(
-                      context, MaterialPageRoute(
-                      builder: (context) =>
-                      Step1Page(detail: recipes[i]),
-                  )
-                  );
-                },
-                child: SizedBox(
-                  height: 200,
-                  child: Image.network(
-                    recipes[i].imgurl,
-                    fit: BoxFit.fill,
+        return Builder(
+          builder: (BuildContext context){
+            return GestureDetector(
+              child: Stack(
+                children: <Widget>[
+                  SizedBox(
+                    height: 300,
+                    child: Image.network(
+                      index.imgurl,
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
-                child: Stack(
-                  children: <Widget>[
-                    Text(
-                        recipes[i].name,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w900,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 2
-                              ..color = Colors.white
-                        )
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
+                    child: Stack(
+                      children: <Widget>[
+                        Text(
+                            index.name,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w900,
+                                foreground: Paint()
+                                  ..style = PaintingStyle.stroke
+                                  ..strokeWidth = 2
+                                  ..color = Colors.white
+                            )
+                        ),
+                        Text(
+                            index.name,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w900,
+                              color: Colors.black,
+                            )
+                        ),
+                      ],
                     ),
-                    Text(
-                        recipes[i].name,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.black,
-                        )
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+              onTap: (){
+                Navigator.push(
+                    context, MaterialPageRoute(
+                  builder: (context) =>
+                      Step1Page(detail: index),
+                )
+                );
+              },
+            );
+          }
         );
       }).toList(),
 

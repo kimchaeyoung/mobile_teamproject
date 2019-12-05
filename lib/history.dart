@@ -8,22 +8,25 @@ bool flag = true;
 
 class HistoryPage extends StatefulWidget {
 
-  final List<dynamic> history;
+  final String uid;
 
-  HistoryPage({Key key, @required this.history}):super(key:key);
+  HistoryPage({Key key, @required this.uid}):super(key:key);
 
   @override
   _HistoryPageState createState() {
-    return _HistoryPageState();
+    return _HistoryPageState(uid: uid);
   }
 }
 
 class _HistoryPageState extends State<HistoryPage> {
+  final String uid;
+  _HistoryPageState({this.uid});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Master Chef Challenge'),
+        title: Text('Game History'),
         backgroundColor: Colors.amber,
       ),
       body: _buildBody(context),
@@ -31,8 +34,10 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   Widget _buildBody(BuildContext context) {
+
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('menu').snapshots(),
+      stream: Firestore.instance.collection('menu').where('completed', arrayContains: uid).snapshots(),
+      //snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return LinearProgressIndicator();
 
