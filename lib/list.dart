@@ -77,6 +77,7 @@ class _ListPageState extends State<ListRecipe> {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
+                                drawStars(record.level),
                                 Container(
                                   child: Row(
                                     children: <Widget>[
@@ -96,24 +97,10 @@ class _ListPageState extends State<ListRecipe> {
                                       children: <Widget>[
                                         Row(
                                           children: <Widget>[
-                                            Text(
-                                                "주재료: " +
-                                                    record.ingredient[0]
-                                                    ['ing_name'] +
-                                                    ", " +
-                                                    record.ingredient[1]
-                                                    ['ing_name'],
-                                                style: TextStyle(
-                                                  color: Colors.grey[500],
-                                                )),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: <Widget>[
                                             Icon(Icons.timer, color: Colors.grey[500],
                                             ),
                                             Text(
-                                              "  분",
+                                              " " + record.total_time.toString() + " 분",
                                               style: TextStyle(
                                                   color: Colors.grey[500]),
                                             )
@@ -134,6 +121,32 @@ class _ListPageState extends State<ListRecipe> {
   }
 }
 
+Widget drawStars(int i){
+  if(i == 3){
+    return Row(
+      children: <Widget>[
+        Icon(Icons.star, color: Colors.yellow, size: 20,),
+        Icon(Icons.star, color: Colors.yellow, size: 20,),
+        Icon(Icons.star, color: Colors.yellow, size: 20,),
+      ],
+    );
+  }
+  else if(i == 2){
+    return Row(
+      children: <Widget>[
+        Icon(Icons.star, color: Colors.yellow, size: 20,),
+        Icon(Icons.star, color: Colors.yellow, size: 20,),
+      ],
+    );
+  }
+  else {
+    return Row(
+      children: <Widget>[
+        Icon(Icons.star, color: Colors.yellow, size: 20,),
+      ],
+    );
+  }
+}
 
 class Record {
   final String id;
@@ -141,19 +154,20 @@ class Record {
   final String imgurl;
   final String creator;
   final int level;
-  final List<dynamic> reviews;
+  final int total_time;
+  final Map<dynamic, dynamic> review;
   final List<dynamic> ingredient;
   final List<dynamic> recipe;
   final DocumentReference reference;
 
   Record.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['id'] != null),
-        id = map['id'],
+      : id = map['id'],
         name = map['name'],
         imgurl = map['imgurl'],
+        total_time = map['total_time'],
         creator = map['creator'],
         level = map['level'],
-        reviews = map['reviews'],
+        review = map['review'],
         ingredient = map['ingredient'],
         recipe = map['recipe'];
 
@@ -161,5 +175,5 @@ class Record {
       : this.fromMap(snapshot.data, reference: snapshot.reference);
 
   @override
-  String toString() => "Record<$id$name$imgurl$creator$level$reviews$ingredient$recipe>";
+  String toString() => "Record<$id$name$imgurl$total_time$creator$level$review$ingredient$recipe>";
 }

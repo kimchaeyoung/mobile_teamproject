@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:team_project/list.dart';
+import 'package:team_project/home.dart';
+import 'package:team_project/reviewCreate.dart';
 import 'package:flare_flutter/flare_actor.dart';
 
 class Step3Page extends StatelessWidget {
@@ -45,14 +47,25 @@ class Step3Page extends StatelessWidget {
                               alignment:Alignment.center, fit:BoxFit.contain,animation: 'Stand'
                           ),
                         ),
-
+                        flag?
+                        Text("Success"): Text("Fail"),
                         Flexible(
                           flex: 2,
                           child: Container(
-                            child: FlatButton(
-                              child: Text(
-                                  "리뷰 남기기"
+                            child: new RaisedButton(
+                              child: new Text(
+                                "리뷰 남기기",
+                                style: TextStyle(color: Colors.white),
                               ),
+                              onPressed: (){
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ReviewCreatePage(detail: detail,)
+                                    )
+                                );
+                              },
+                              color: Colors.amber,
                             ),
                             //height: 30,
                           ),
@@ -75,19 +88,14 @@ class Step3Page extends StatelessWidget {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => ListRecipe()));
+                                                  builder: (context) => HomePage()));
                                         },
                                         child: new Text(
-                                          "LIST",
+                                          "Home",
                                           style: TextStyle(color: Colors.white),
                                         ),
                                         color: Colors.grey,
                                       ),
-//                Container(
-//                  child: Image.network(
-//                    detail.failimg,fit:BoxFit.fill
-//                  ),
-//                )
                                     ]))),
                       ],
                     )))));

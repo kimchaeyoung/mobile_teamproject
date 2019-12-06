@@ -4,6 +4,7 @@ import 'package:team_project/step3.dart';
 import 'package:quiver/async.dart';
 import 'dart:async';
 
+
 class Step2Page extends StatefulWidget {
 
   final Record detail;
@@ -17,8 +18,8 @@ class Step2Page extends StatefulWidget {
 
 class _Step2PageState extends State<Step2Page> {
   final Record detail;
-  _Step2PageState({this.detail});
 
+  _Step2PageState({this.detail});
   bool flag = true;
   Timer _timer;
   int index = 0;
@@ -26,6 +27,7 @@ class _Step2PageState extends State<Step2Page> {
 
 
   void startTimer() {
+    _start = detail.recipe[index]['timer'];
     const oneSec = const Duration(seconds: 1);
     _timer = new Timer.periodic(
       oneSec,
@@ -41,7 +43,6 @@ class _Step2PageState extends State<Step2Page> {
                 else {
                   print(detail.recipe.length);
                   index += 1;
-                  _start = 10;
                   startTimer();
                 }
                 //timer.cancel();
@@ -52,8 +53,6 @@ class _Step2PageState extends State<Step2Page> {
           ),
     );
   }
-
-
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,47 +74,48 @@ class _Step2PageState extends State<Step2Page> {
                 borderRadius: BorderRadius.circular(5.0),
               ),
               child: Card(
-                child: Column(children: <Widget>[
+                child:
+                Column(children: <Widget>[
                   Flexible(
                     flex: 6,
-                    child: Container(
+                    child:
+                    Container(
                       padding: const EdgeInsets.all(32),
-                      child: Row(
+                      child:
+
+                      Row(
                         children: <Widget>[
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  child: Row(
-                                    children: <Widget>[
-                                      SizedBox(
-                                        width: 250,
-                                        child: Text(detail.recipe[index].toString()),
-                                      )
-                                    ],
-                                  ),
+
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                child:
+                                Row(
+                                  children: <Widget>[
+                                    Text(detail.recipe[index]['recipe_des'].toString()),
+                                  ],
                                 ),
-                                Container(
-                                  child: Column(
-                                    children: <Widget>[
-                                      IconButton(
-                                        icon: Icon(Icons.alarm_on),
-                                        onPressed:
-                                            (){
-                                          startTimer();
-                                        },
-                                        //child: Text("start"),
-                                      ),
-                                      Text("$_start",)
+                              ),
+                              Container(
+                                child: Column(
+                                  children: <Widget>[
+                                    IconButton(
+                                      icon: Icon(Icons.alarm_on),
+                                      onPressed:
+                                          (){
+                                        startTimer();
+                                      },
+                                    ),
+                                    Text("$_start")
 
-                                    ],
-                                  ),
+                                  ],
+                                ),
+                              )
 
-                                )
-                              ],
-                            ),
-                          )
+                            ],
+                          ),
+
                         ],
                       ),
                     ),
@@ -142,11 +142,14 @@ class _Step2PageState extends State<Step2Page> {
                           ),
                           new RaisedButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          Step3Page(detail: detail, flag: flag)));
+                              if(index == detail.recipe.length-1) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Step3Page(
+                                                detail: detail, flag: flag)));
+                              }
                             },
                             child: new Text("NEXT",
                                 style: TextStyle(color: Colors.white)),
@@ -162,15 +165,4 @@ class _Step2PageState extends State<Step2Page> {
             )));
   }
 
-  Widget _buildBody(BuildContext context) {
-    return Container(
-      child: Wrap(
-        direction: Axis.vertical,
-        children: <Widget>[
-          Text(detail.recipe[0].toString(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-          //Text(detail.recipe[1].toString())
-        ],
-      ),
-    );
-  }
 }

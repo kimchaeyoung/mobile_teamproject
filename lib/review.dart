@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:team_project/step1.dart';
 
-import 'choice.dart';
-import 'list.dart';
+import 'package:team_project/choice.dart';
+import 'package:team_project/list.dart';
 
 class ReviewPage extends StatelessWidget {
   final Record detail;
@@ -46,7 +46,7 @@ class ReviewPage extends StatelessWidget {
 
     return ListView.separated(
       padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 20.0),
-      itemCount: detail.reviews.length,
+      itemCount: detail.review.length,
       itemBuilder: (BuildContext context, int index) {
         return Container(
           padding: const EdgeInsets.only(left: 20),
@@ -59,7 +59,7 @@ class ReviewPage extends StatelessWidget {
                   flex: 3,
                   child: Row(children: <Widget>[
                     Text(
-                      '${detail.reviews[index]['username']}',
+                      '${detail.review[index]['username']}',
                       style:
                       TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     )
@@ -72,7 +72,7 @@ class ReviewPage extends StatelessWidget {
                   flex: 3,
                   child: Row(children: <Widget>[
                     Text(
-                      '${detail.reviews[index]['review']}',
+                      '${detail.review[index]['review']}',
                       style: TextStyle(
                         fontSize: 15,
                       ),

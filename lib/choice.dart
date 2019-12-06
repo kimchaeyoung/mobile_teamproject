@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:team_project/list.dart';
 import 'package:team_project/review.dart';
 import 'package:team_project/step1.dart';
-import 'package:team_project/step2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'package:team_project/low.dart';
-import 'package:team_project/mid.dart';
-import 'package:team_project/high.dart';
 
 class ChoicePage extends StatelessWidget {
   final Record detail;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:team_project/step1.dart';
-import 'package:team_project/mypage.dart';
+import 'package:team_project/choice.dart';
 import 'package:team_project/list.dart';
 
 bool flag = true;
@@ -58,92 +57,75 @@ class _MyRecipePageState extends State<MyRecipePage> {
     return Padding(
       key: ValueKey(record.name),
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        child: Card(
-          child: Column(
-            children: <Widget> [
-              Image.network(
-                record.imgurl,
-                width: 600,
-                height: 200,
-                fit: BoxFit.cover,
-              ),
-              Container(
-                padding: const EdgeInsets.all(32),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            child:
-                            Row(
-                              children: <Widget>[
-                                Text(
-                                  record.name,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                IconButton(
-                                  icon: Icon(flag? (Icons.keyboard_arrow_down) : (Icons.keyboard_arrow_up)),
-                                  onPressed: () {
-                                    setState(() {
-                                      flag = !flag;
-                                    });
-                                  },
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            child:
-                            Row(
-                              children: <Widget>[
-                                Text(
-                                  record.name,
-                                  style: TextStyle(
-                                    color: Colors.grey[500],
-                                  ),
-                                ),
-                                FlatButton(
-                                    child: Text("Start"),
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context, MaterialPageRoute(
-                                        builder: (context) =>
-                                            Step1Page(detail: record),
-                                      )
-                                      );
-                                    }
-                                )
-                              ],
-                            ),
-                          ),
-                          flag ? Column()
-                              : Column(
-                            children: <Widget>[
-                              Divider(),
-                              Text("Reviews"),
-                              Text(record.reviews[0]['review'].toString())
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
+      child: Hero(
+          tag: record.name,
+          child: new InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return ChoicePage(detail: record);
+              }));
+            },
+            child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(5.0),
                 ),
-              ),
-            ],
-          ),
-        ),
-      ),
+                child: Card(
+                  child: Column(
+                    children: <Widget>[
+                      Image.network(
+                        record.imgurl,
+                        width: 600,
+                        height: 200,
+                        fit: BoxFit.cover,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(32),
+                        child: Row(children: <Widget>[
+                          Expanded(
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  drawStars(record.level),
+                                  Container(
+                                    child: Row(
+                                      children: <Widget>[
+                                        Text(
+                                          record.name,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Row(
+                                            children: <Widget>[
+                                              Icon(Icons.timer, color: Colors.grey[500],
+                                              ),
+                                              Text(
+                                                " " + record.total_time.toString() + " 분",
+                                                style: TextStyle(
+                                                    color: Colors.grey[500]),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      )),
+
+                                ]),
+                          ),
+                        ]),
+                      )
+                    ],
+                  ),
+                )),
+          )),
     );
   }
 }

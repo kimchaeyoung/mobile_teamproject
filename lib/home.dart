@@ -7,7 +7,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 
 import 'package:team_project/list.dart';
-import 'package:team_project/step1.dart';
+import 'package:team_project/choice.dart';
 import 'package:team_project/viewModel.dart';
 
 int i = 0;
@@ -228,7 +228,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                     context, MaterialPageRoute(
                   builder: (context) =>
-                      Step1Page(detail: index),
+                      ChoicePage(detail: index),
                 )
                 );
               },
