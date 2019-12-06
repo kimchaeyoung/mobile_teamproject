@@ -17,29 +17,30 @@ class ReviewPage extends StatelessWidget {
           backgroundColor: Colors.amber,
         ),
         body: new Column(
-          children: <Widget>[
-            new Container(
-              child: Image.network(
-                detail.imgurl,
-                fit: BoxFit.fill,
-                width: 600,
-                height: 250,
-              ),
+        children: <Widget>[
+          new Container(
+            child: Image.network(
+            detail.imgurl,
+            fit: BoxFit.fill,
+            width: 600,
+            height: 250,
             ),
-            Container(
-                margin: const EdgeInsets.all(15.0),
-                padding: const EdgeInsets.all(3.0),
+          ),
+          Container(
+            margin: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(3.0),
 
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: Text("Review", style: TextStyle(backgroundColor: Colors.amberAccent, fontSize: 17),),
-                )
-            ),
-            new Expanded(
-              child: _buildBody(context),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: Text("Review", style: TextStyle(backgroundColor: Colors.amberAccent, fontSize: 17),),
             )
-          ],
-        ));
+          ),
+          new Expanded(
+            child: _buildBody(context),
+          )
+        ]
+      )
+    );
   }
 
   Widget _buildBody(BuildContext context) {
@@ -54,40 +55,26 @@ class ReviewPage extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-
-                Flexible(
-                  flex: 3,
+                Expanded(
                   child: Row(children: <Widget>[
                     Text(
-                      '${detail.review[index]['username']}',
+                      '${detail.review.keys.elementAt(index)}',
                       style:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     )
                   ]),
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Flexible(
-                  flex: 3,
+                Expanded(
                   child: Row(children: <Widget>[
                     Text(
-                      '${detail.review[index]['review']}',
+                      '${detail.review.values.elementAt(index)}',
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 13,
                       ),
                     )
                   ]),
                 ),
-                Flexible(
-                  flex: 3,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text("작성시간: "),
-                    ],
-                  ),
-                )
+
               ]),
 
         );
