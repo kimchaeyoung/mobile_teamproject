@@ -46,84 +46,82 @@ class MidPage extends StatelessWidget {
       child: Hero(
           tag: record.name,
           child: new InkWell(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return ChoicePage(detail: record);
-              }));
-            },
-            child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                child: Card(
-                  child: Column(
-                    children: <Widget>[
-                      Image.network(
-                        record.imgurl,
-                        width: 600,
-                        height: 200,
-                        fit: BoxFit.cover,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(32),
-                        child: Row(children: <Widget>[
-                          Expanded(
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                    child: Row(
-                                      children: <Widget>[
-                                        Text(
-                                          record.name,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                      child: Column(
-                                        children: <Widget>[
-                                          Row(
-                                            children: <Widget>[
-                                              Text(
-                                                  "주재료: " +
-                                                      record.ingredient[0]
-                                                      ['ing_name'] +
-                                                      ", " +
-                                                      record.ingredient[1]
-                                                      ['ing_name'],
-                                                  style: TextStyle(
-                                                    color: Colors.grey[500],
-                                                  )),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: <Widget>[
-                                              Icon(Icons.timer, color: Colors.grey[500],
-                                              ),
-                                              Text(
-                                                "  분",
-                                                style: TextStyle(
-                                                    color: Colors.grey[500]),
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      )),
-
-                                ]),
-                          ),
-                        ]),
-                      )
-                    ],
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ChoicePage(detail: record);
+                }));
+              },
+              child:
+              new Stack(
+                children: <Widget>[
+                  new Container(
+                    height: 124.0,
+                    margin: new EdgeInsets.all(8.0),
+                    decoration: new BoxDecoration(
+                      color: new Color(0xFFFFEFD5),
+                      shape: BoxShape.rectangle,
+                      borderRadius: new BorderRadius.circular(5.0),
+                      //border: BorderStyle(color:),
+                      boxShadow: <BoxShadow>[
+                        new BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 10.0,
+                          offset: new Offset(0.0, 10.0),
+                        ),
+                      ],
+                    ),
                   ),
-                )),
+                  new Container(
+                    margin: new EdgeInsets.all(10.0),
+                    //alignment: FractionalOffset.centerLeft,
+                    child: new Image.network(
+                      record.imgurl,
+                      fit: BoxFit.cover,
+                    ),
+                    height: 120.0,
+                    width: 140.0,
+                  ),
+                  Container(
+                    margin: new EdgeInsets.only(
+                        right: 10.0, top: 25.0, bottom: 10.0, left: 170.0),
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              record.name,
+                              style: TextStyle(
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Container(
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                      "주재료: " +
+                                          record.ingredient[0]['ing_name'] +
+                                          ", " +
+                                          record.ingredient[1]['ing_name'],
+                                      style: TextStyle(
+                                          color: Colors.grey[500],
+                                          fontSize: 10.0)),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
           )),
     );
   }

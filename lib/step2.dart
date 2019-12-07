@@ -45,7 +45,7 @@ class _Step2PageState extends State<Step2Page> {
                   index += 1;
                   startTimer();
                 }
-                //timer.cancel();
+                timer.cancel();
               } else {
                 _start = _start - 1;
               }
@@ -73,105 +73,102 @@ class _Step2PageState extends State<Step2Page> {
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(5.0),
               ),
-              child: Row(
-                children: <Widget>[
+              child: Card(
+                child:
+                Column(children: <Widget>[
                   Flexible(
-                    child: Card(
+                    flex: 6,
+                    child:
+                    Container(
+                      padding: const EdgeInsets.all(32),
                       child:
-                      Column(children: <Widget>[
-                        Flexible(
-                          flex: 6,
-                          child:
-                          Container(
-                            padding: const EdgeInsets.all(32),
+
+                      Row(
+                        children: <Widget>[
+                          Expanded(
                             child:
-
-                            Wrap(
-                              alignment: WrapAlignment.center,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
 
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Container(
-                                      child:
-                                      Wrap(
-                                        children: <Widget>[
-                                          Text(detail.recipe[index]['recipe_des'].toString(),
-                                              maxLines: 3,
-                                              overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
+                                Container(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(detail.recipe[index]['recipe_des'].toString(),
+                                        softWrap: true,
                                       ),
-                                    ),
-                                    Container(
-                                      child: Column(
-                                        children: <Widget>[
-                                          IconButton(
-                                            icon: Icon(Icons.alarm_on),
-                                            onPressed:
-                                                (){
-                                              startTimer();
-                                            },
-                                          ),
-                                          Text("$_start")
-
-                                        ],
-                                      ),
-                                    )
-
-                                  ],
-                                ),
-
-                              ],
-                            ),
-                          ),
-                        ),
-                        Flexible(
-                          flex: 1,
-                          child: ButtonTheme.bar(
-                            child: new ButtonBar(
-                              alignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                //Spacer(flex: 1),
-                                new RaisedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: new Text(
-                                    "BACK",
-                                    style: TextStyle(color: Colors.white),
+                                    ],
                                   ),
-                                  color: Colors.grey,
                                 ),
-                                SizedBox(
-                                  width: 80,
+                                Container(
+                                  child: Column(
+                                    children: <Widget>[
+                                      IconButton(
+                                        icon: Icon(Icons.alarm_on),
+                                        onPressed:
+                                            (){
+                                          startTimer();
+                                        },
+                                      ),
+                                      Text("$_start")
+
+                                    ],
+                                  ),
                                 ),
-                                new RaisedButton(
-                                  onPressed: () {
-                                    if(index == detail.recipe.length-1) {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Step3Page(
-                                                      detail: detail, flag: flag)));
-                                    }
-                                  },
-                                  child: new Text("NEXT",
-                                      style: TextStyle(color: Colors.white)),
-                                  color: Colors.amberAccent,
-                                ),
-                                //Spacer(flex: 1,)
+                                Expanded(
+                                    child: Image.network(detail.recipe[index]['img']),
+                                  )
+
                               ],
                             ),
                           ),
-                        )
-                      ]
+                        ],
                       ),
                     ),
                   ),
-                ],
+                  Flexible(
+                    flex: 1,
+                    child: ButtonTheme.bar(
+                      child: new ButtonBar(
+                        alignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          //Spacer(flex: 1),
+                          new RaisedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: new Text(
+                              "BACK",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            color: Colors.grey,
+                          ),
+                          SizedBox(
+                            width: 80,
+                          ),
+                          new RaisedButton(
+                            onPressed: () {
+                              if(index == detail.recipe.length-1) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Step3Page(
+                                                detail: detail, flag: flag)));
+                              }
+                            },
+                            child: new Text("NEXT",
+                                style: TextStyle(color: Colors.white)),
+                            color: Colors.amberAccent,
+                          ),
+                          //Spacer(flex: 1,)
+                        ],
+                      ),
+                    ),
+                  )
+                ]),
               ),
             )));
   }

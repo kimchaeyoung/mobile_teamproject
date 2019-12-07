@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:team_project/step1.dart';
 
 import 'package:team_project/choice.dart';
+import 'package:team_project/home.dart';
 import 'package:team_project/list.dart';
 
 class ReviewPage extends StatelessWidget {
@@ -30,14 +31,31 @@ class ReviewPage extends StatelessWidget {
             margin: const EdgeInsets.all(15.0),
             padding: const EdgeInsets.all(3.0),
 
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Text("Review", style: TextStyle(backgroundColor: Colors.amberAccent, fontSize: 17),),
-            )
+            child:
+            Text("Review", style: TextStyle(backgroundColor: Colors.amberAccent, fontSize: 17),),
           ),
           new Expanded(
             child: _buildBody(context),
-          )
+          ),
+          ButtonTheme.bar(
+              child: new ButtonBar(
+                  alignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    //Spacer(flex: 1),
+                    new RaisedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomePage()));
+                      },
+                      child: new Text(
+                        "Home",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      color: Colors.amber,
+                    ),
+                  ])),
         ]
       )
     );
